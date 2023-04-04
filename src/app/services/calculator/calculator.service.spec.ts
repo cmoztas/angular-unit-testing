@@ -1,18 +1,19 @@
 import {CalculatorService} from './calculator.service';
-import {LoggerService} from '../logger/logger.service';
 
 describe('Calculator Service', (): void => {
-  it('should add two numbers', () => {
-    const loggerService: LoggerService = new LoggerService();
-    const calculator: CalculatorService = new CalculatorService(loggerService);
+  it('should add two numbers', (): void => {
+    let mockLoggerService = jasmine.createSpyObj('LoggerService', ['log']);
+    const calculator: CalculatorService = new CalculatorService(mockLoggerService);
     let result: number = calculator.add(2, 2);
     expect(result).toBe(4);
+    expect(mockLoggerService.log).toHaveBeenCalledTimes(1);
   });
 
   it('should subtract two numbers', (): void => {
-    const loggerService: LoggerService = new LoggerService();
-    const calculator: CalculatorService = new CalculatorService(loggerService);
+    let mockLoggerService = jasmine.createSpyObj('LoggerService', ['log']);
+    const calculator: CalculatorService = new CalculatorService(mockLoggerService);
     let result: number = calculator.subtract(2, 2);
     expect(result).toBe(0);
+    expect(mockLoggerService.log).toHaveBeenCalledTimes(1);
   });
 })
