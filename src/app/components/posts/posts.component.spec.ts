@@ -72,4 +72,4 @@ describe('Posts Component', (): void => {
       expect(postService.deletePost).toHaveBeenCalledTimes(1);
     });
   });
-})
+});
