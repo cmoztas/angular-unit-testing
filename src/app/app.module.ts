@@ -5,16 +5,20 @@ import {AppComponent} from './app.component';
 import {StrengthPipe} from './pipes/strength/strength.pipe';
 import {PostsComponent} from './components/posts/posts.component';
 import {HttpClientModule} from '@angular/common/http';
+import { PostComponent } from './components/post/post.component';
+import {RouterLink} from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     StrengthPipe,
-    PostsComponent
+    PostsComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterLink
   ],
   providers: [],
   bootstrap: [AppComponent]
