@@ -8,10 +8,10 @@ import {Post} from '../../models/post.model';
 })
 export class PostComponent {
   @Input() post: Post | null = null;
-  @Output() delete: EventEmitter<void> = new EventEmitter<void>();
+  @Output() delete: EventEmitter<Post> = new EventEmitter<Post>();
 
   onDeletePost(event: Event): void {
     event.stopPropagation();
-    this.delete.emit();
+    this.delete.emit(this.post!);
   }
 }
