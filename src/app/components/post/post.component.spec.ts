@@ -4,13 +4,15 @@ import {first} from 'rxjs';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 describe('Post Component', (): void => {
+  let fixture: ComponentFixture<PostComponent>;
   let component: PostComponent;
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [PostComponent]
     });
 
-    const fixture: ComponentFixture<PostComponent> = TestBed.createComponent(PostComponent);
+    fixture = TestBed.createComponent(PostComponent);
     component = fixture.componentInstance;
   });
 
