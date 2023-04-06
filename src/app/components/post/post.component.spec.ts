@@ -3,6 +3,8 @@ import {Post} from '../../models/post.model';
 import {first} from 'rxjs';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('Post Component', (): void => {
   let fixture: ComponentFixture<PostComponent>;
@@ -31,6 +33,16 @@ describe('Post Component', (): void => {
     const a: HTMLElement | null = postElement.querySelector('a');
 
     expect(a?.textContent).toContain(post.title);
+  });
+
+  it('should render the post title in the anchor element using debug element', (): void => {
+    const post: Post = {id: 1, title: 'Title 1', description: 'Description 1'};
+    component.post = post;
+    fixture.detectChanges();
+
+    const postDebugElement: DebugElement = fixture.debugElement;
+    const aElement = postDebugElement.query(By.css('a')).nativeElement;
+    expect(aElement.textContent).toContain(post.title);
   });
 
   it('should raise and event when the delete post is clicked', (): void => {
