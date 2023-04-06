@@ -1,55 +1,56 @@
 import {Post} from '../../models/post.model';
 import {PostsComponent} from './posts.component';
-import {of} from 'rxjs';
-import {TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PostService} from '../../services/post/post.service';
-
-class MockPostsService {
-  getPosts() {};
-  deletePost() {
-    return of({});
-  };
-}
+import {of} from 'rxjs';
+import {Component, Input} from '@angular/core';
 
 describe('Posts Component', (): void => {
   let POSTS: Post[];
   let component: PostsComponent;
-  let postService: any;
+  let mockPostsService: any;
+  let fixture: ComponentFixture<PostsComponent>;
+
+  @Component({
+    selector: 'app-post',
+    template: '<div></div>'
+  })
+  class FakePostComponent {
+    @Input() post: Post | null = null;
+  }
 
   beforeEach((): void => {
     POSTS = [
-      {
-        id: 1,
-        title: 'title 1',
-        description: 'body 1'
-      },
-      {
-        id: 2,
-        title: 'title 2',
-        description: 'body 2'
-      },
-      {
-        id: 3,
-        title: 'title 3',
-        description: 'body 3'
-      }
-    ]
+      {id: 1, title: 'title 1', description: 'body 1'},
+      {id: 2, title: 'title 2', description: 'body 2'},
+      {id: 3, title: 'title 3', description: 'body 3'}
+    ];
+
+    mockPostsService = jasmine.createSpyObj(['getPosts', 'deletePost']);
 
     TestBed.configureTestingModule({
+      declarations: [PostsComponent, FakePostComponent],
       providers: [
-        PostsComponent,
         {
           provide: PostService,
-          useClass: MockPostsService}
+          useValue: mockPostsService
+        }
       ]
     });
 
-    component = TestBed.inject(PostsComponent);
-    postService = TestBed.inject(PostService);
+    fixture = TestBed.createComponent(PostsComponent);
+    component = fixture.componentInstance;
   });
+
+  it('should set posts from the service directly', (): void => {
+    mockPostsService.getPosts.and.returnValue(of(POSTS));
+    fixture.detectChanges();
+    expect(component.posts.length).toBe(3);
+  })
 
   describe('delete', (): void => {
     beforeEach((): void => {
+      mockPostsService.deletePost.and.returnValue(of(true));
       component.posts = POSTS;
     });
 
@@ -67,9 +68,8 @@ describe('Posts Component', (): void => {
     });
 
     it('should call the delete method in Post Service only once', (): void => {
-      spyOn(postService, 'deletePost').and.callThrough();
       component.delete(POSTS[1]);
-      expect(postService.deletePost).toHaveBeenCalledTimes(1);
+      expect(mockPostsService.deletePost).toHaveBeenCalledTimes(1);
     });
   });
 });
