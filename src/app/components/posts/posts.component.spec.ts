@@ -3,7 +3,8 @@ import {PostsComponent} from './posts.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PostService} from '../../services/post/post.service';
 import {of} from 'rxjs';
-import {Component, Input} from '@angular/core';
+import {Component, DebugElement, Input} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('Posts Component', (): void => {
   let POSTS: Post[];
@@ -46,7 +47,15 @@ describe('Posts Component', (): void => {
     mockPostsService.getPosts.and.returnValue(of(POSTS));
     fixture.detectChanges();
     expect(component.posts.length).toBe(3);
-  })
+  });
+
+  it('should create one post child Element for each post', (): void => {
+    mockPostsService.getPosts.and.returnValue(of(POSTS));
+    fixture.detectChanges();
+    const debugElement: DebugElement = fixture.debugElement;
+    const postElements: DebugElement[] = debugElement.queryAll(By.css('.post'));
+    expect(postElements.length).toBe(POSTS.length);
+  });
 
   describe('delete', (): void => {
     beforeEach((): void => {
