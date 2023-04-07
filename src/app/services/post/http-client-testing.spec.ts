@@ -30,4 +30,28 @@ describe('Http Client Testing Module', (): void => {
     request.flush(testData);
     expect(request.request.method).toBe('GET');
   });
+
+  it('should test multiple request', (): void => {
+    const testData: Data[] = [{name: 'Çağkan'}, {name: 'Çağkan Mert'}];
+
+    httpClient.get<Data[]>(testUrl).subscribe((data: Data[]): void => {
+      expect(data.length).toEqual(0);
+    });
+
+    httpClient.get<Data[]>(testUrl).subscribe((data: Data[]): void => {
+      expect(data).toEqual([testData[0]]);
+    });
+
+    httpClient.get<Data[]>(testUrl).subscribe((data: Data[]): void => {
+      expect(data).toEqual(testData);
+    });
+
+    const request: TestRequest[] = httpTestingController.match(testUrl);
+    expect(request.length).toBe(3);
+
+    request[0].flush([]);
+    request[1].flush([testData[0]]);
+    request[2].flush(testData);
+
+  });
 });
