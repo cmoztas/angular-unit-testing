@@ -2,6 +2,7 @@ import {PostService} from './post.service';
 import {HttpClient} from '@angular/common/http';
 import {Post} from '../../models/post.model';
 import {of} from 'rxjs';
+import {TestBed} from '@angular/core/testing';
 
 describe('Post Service', (): void => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
@@ -13,9 +14,17 @@ describe('Post Service', (): void => {
   ];
 
   beforeEach((): void => {
+    let httpClientSpyObj = jasmine.createSpyObj('HttpClient', ['get']);
 
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    postService = new PostService(httpClientSpy);
+    TestBed.configureTestingModule({
+      providers: [
+        PostService,
+        {provide: HttpClient, useValue: httpClientSpyObj}
+      ]
+    });
+
+    postService = TestBed.inject(PostService);
+    httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
   });
 
   describe('getPosts()', (): void => {
