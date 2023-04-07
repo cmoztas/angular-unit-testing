@@ -5,20 +5,24 @@ import {AppComponent} from './app.component';
 import {StrengthPipe} from './pipes/strength/strength.pipe';
 import {PostsComponent} from './components/posts/posts.component';
 import {HttpClientModule} from '@angular/common/http';
-import { PostComponent } from './components/post/post.component';
-import {RouterLink} from '@angular/router';
+import {PostComponent} from './components/post/post.component';
+import {PostDetailComponent} from './components/post-detail/post-detail.component';
+import {AppRoutingModule} from './app-routing.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     StrengthPipe,
     PostsComponent,
-    PostComponent
+    PostComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     HttpClientModule,
-    RouterLink
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
