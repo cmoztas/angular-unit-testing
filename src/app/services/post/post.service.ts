@@ -22,10 +22,10 @@ export class PostService {
   }
 
   deletePost(post: Post): Observable<Object> {
-    return this.http.delete(`https://jsonplaceholder.typicode.com/post/${post.id}`);
+    return this.http.delete(`https://jsonplaceholder.typicode.com/posts/${post.id}`);
   }
 
   updatePost(post: Post): Observable<Post> {
-    return this.http.patch<Post>(`https://jsonplaceholder.typicode.com/post/${post.id}`, post);
+    return this.http.patch<Post>(`https://jsonplaceholder.typicode.com/posts/${post.id}`, post);
   }
 }
