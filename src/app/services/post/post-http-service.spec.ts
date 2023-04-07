@@ -28,9 +28,22 @@ describe('postService (HttpClientTestingModule)', (): void => {
         expect(data).toEqual(POSTS);
         done();
       });
+
       const request: TestRequest = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts');
       request.flush(POSTS);
       expect(request.request.method).toBe('GET');
     });
   });
+
+  describe('getPost()', (): void => {
+    it('should return single post when getPost() is called with postId', (): void => {
+      postService.getPost(1).subscribe();
+      const request: TestRequest = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts/1');
+      expect(request.request.method).toBe('GET');
+    });
+  });
+
+  afterEach((): void => {
+    httpTestingController.verify();
+  })
 });

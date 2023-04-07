@@ -17,6 +17,10 @@ export class PostService {
     return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
   }
 
+  getPost(postId: number): Observable<Post> {
+    return this.http.get<Post>(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+  }
+
   deletePost(post: Post): Observable<Object> {
     return this.http.delete(`https://jsonplaceholder.typicode.com/post/${post.id}`);
   }
