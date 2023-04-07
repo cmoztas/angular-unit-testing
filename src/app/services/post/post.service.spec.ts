@@ -7,9 +7,9 @@ describe('Post Service', (): void => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let postService: PostService;
   const POSTS: Post[] = [
-    {id: 1, title: 'title 1', description: 'body 1'},
-    {id: 2, title: 'title 2', description: 'body 2'},
-    {id: 3, title: 'title 3', description: 'body 3'}
+    {id: 1, userId: 1, title: 'title 1', body: 'body 1'},
+    {id: 2, userId: 1, title: 'title 2', body: 'body 2'},
+    {id: 3, userId: 1, title: 'title 3', body: 'body 3'}
   ];
 
   beforeEach((): void => {

@@ -9,6 +9,7 @@ import {By} from '@angular/platform-browser';
 describe('Post Component', (): void => {
   let fixture: ComponentFixture<PostComponent>;
   let component: PostComponent;
+  const post: Post = {id: 1, userId: 1, title: 'Title 1', body: 'Body 1'};
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
@@ -25,10 +26,8 @@ describe('Post Component', (): void => {
   });
 
   it('should render the post title in the anchor element', (): void => {
-    const post: Post = {id: 1, title: 'Title 1', description: 'Description 1'};
     component.post = post;
     fixture.detectChanges();
-
     const postElement: HTMLElement = fixture.nativeElement;
     const a: HTMLElement | null = postElement.querySelector('a');
 
@@ -36,18 +35,15 @@ describe('Post Component', (): void => {
   });
 
   it('should render the post title in the anchor element using debug element', (): void => {
-    const post: Post = {id: 1, title: 'Title 1', description: 'Description 1'};
     component.post = post;
     fixture.detectChanges();
 
     const postDebugElement: DebugElement = fixture.debugElement;
-    const aElement = postDebugElement.query(By.css('a')).nativeElement;
+    const aElement: HTMLElement = postDebugElement.query(By.css('a')).nativeElement;
     expect(aElement.textContent).toContain(post.title);
   });
 
   it('should raise and event when the delete post is clicked', (): void => {
-    const post: Post = {id: 1, title: 'Title 1', description: 'Description 1'};
-
     component.post = post;
 
     component.delete.pipe(first())

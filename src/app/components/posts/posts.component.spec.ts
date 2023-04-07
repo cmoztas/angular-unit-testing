@@ -16,9 +16,9 @@ describe('Posts Component', (): void => {
 
   beforeEach((): void => {
     POSTS = [
-      {id: 1, title: 'title 1', description: 'body 1'},
-      {id: 2, title: 'title 2', description: 'body 2'},
-      {id: 3, title: 'title 3', description: 'body 3'}
+      {id: 1, userId: 1, title: 'title 1', body: 'body 1'},
+      {id: 2, userId: 1, title: 'title 2', body: 'body 2'},
+      {id: 3, userId: 1, title: 'title 3', body: 'body 3'}
     ];
 
     mockPostsService = jasmine.createSpyObj(['getPosts', 'deletePost']);
